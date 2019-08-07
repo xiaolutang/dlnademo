@@ -19,7 +19,14 @@
         <!-- Or a custom service configuration, also use this class in bindService()!
         <service android:name=".BrowserUpnpService"/>
         -->
+        <service
+            android:name="com.huaqiyun.dlna.service.ClingUpnpService"
+            android:exported="false" />
 
+        <service
+            android:name="com.huaqiyun.dlna.service.SystemService"
+            android:exported="false" />
+        <service android:name="com.huaqiyun.dlna.ui.BrowserUpnpService"/>
     </application>
 
 </manifest>

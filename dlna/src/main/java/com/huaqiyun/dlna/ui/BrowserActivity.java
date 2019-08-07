@@ -91,6 +91,8 @@ public class BrowserActivity extends ListActivity {
         }
     };
 
+    private Device currentSelectDevice;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -197,7 +199,7 @@ public class BrowserActivity extends ListActivity {
         textView.setTextSize(12);
         super.onListItemClick(l, v, position, id);
 //        upnpService.getControlPoint().execute()
-        listAdapter.getItem(position).getDevice().getType();
+        currentSelectDevice = listAdapter.getItem(position).getDevice();
     }
 
     protected class BrowseRegistryListener extends DefaultRegistryListener {
