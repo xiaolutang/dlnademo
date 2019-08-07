@@ -27,6 +27,7 @@
             android:name="com.huaqiyun.dlna.service.SystemService"
             android:exported="false" />
         <service android:name="com.huaqiyun.dlna.ui.BrowserUpnpService"/>
+        <service android:name="com.huaqiyun.dlna.service.DLNAPlayService" />
     </application>
 
 </manifest>
