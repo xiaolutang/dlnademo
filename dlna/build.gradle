@@ -45,4 +45,6 @@ dependencies {
     implementation 'org.eclipse.jetty:jetty-server:8.1.22.v20160922'
     implementation 'org.eclipse.jetty:jetty-servlet:8.1.22.v20160922'
     implementation 'org.eclipse.jetty:jetty-client:8.1.22.v20160922'
+
+    implementation 'org.slf4j:slf4j-simple:1.7.21'
 }
