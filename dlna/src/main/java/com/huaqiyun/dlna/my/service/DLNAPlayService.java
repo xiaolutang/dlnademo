@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * 考虑到有可能退出在进入需要获取相关的状态，将投屏播放放在Service中进行处理，通过bind的方式来处理
  * */
-public class DLNAPlayService extends Service implements IDeviceManager.OnDeviceChangeListener {
+public class DLNAPlayService extends AndroidUpnpServiceImpl implements IDeviceManager.OnDeviceChangeListener {
     private final String TAG = DLNAPlayService.class.getSimpleName();
 
     private IDeviceManager mDeviceManager;
@@ -33,33 +33,36 @@ public class DLNAPlayService extends Service implements IDeviceManager.OnDeviceC
     private Device mSelectDevice;
     private DLNAManager mDlnaManager = new DLNAManager();
 
-    private boolean isConnect = false;
+//    private boolean isConnect = false;
 
-    private ServiceConnection mServiceConnection = new ServiceConnection() {
-
-        public void onServiceConnected(ComponentName className, IBinder service) {
-
-            mDeviceManager = DeviceManager.getInstance(((AndroidUpnpService) service).get());
-            mDeviceManager.setDeviceChangeListener(DLNAPlayService.this);
-            mPlayerController = new DLNAPlayerController(mDeviceManager);
-            isConnect = true;
-        }
-
-        public void onServiceDisconnected(ComponentName className) {
-//            mDeviceManager.destroy();
-            isConnect = false;
-        }
-    };
+//    private ServiceConnection mServiceConnection = new ServiceConnection() {
+//
+//        public void onServiceConnected(ComponentName className, IBinder service) {
+//
+//            mDeviceManager = DeviceManager.getInstance(((AndroidUpnpService) service).get());
+//            mDeviceManager.setDeviceChangeListener(DLNAPlayService.this);
+//            mPlayerController = new DLNAPlayerController(mDeviceManager);
+//            isConnect = true;
+//        }
+//
+//        public void onServiceDisconnected(ComponentName className) {
+////            mDeviceManager.destroy();
+//            isConnect = false;
+//        }
+//    };
 
     @Override
     public void onCreate() {
         Log.d(TAG,"onCreate");
 
-        if(!isConnect){
-            Intent intent = new Intent(this, AndroidUpnpServiceImpl.class);
-            bindService(intent,mServiceConnection,BIND_AUTO_CREATE);
-        }
+//        if(!isConnect){
+//            Intent intent = new Intent(this, AndroidUpnpServiceImpl.class);
+//            bindService(intent,mServiceConnection,BIND_AUTO_CREATE);
+//        }
         super.onCreate();
+        mDeviceManager = DeviceManager.getInstance(upnpService);
+        mDeviceManager.setDeviceChangeListener(DLNAPlayService.this);
+        mPlayerController = new DLNAPlayerController(mDeviceManager);
     }
 
     @Override

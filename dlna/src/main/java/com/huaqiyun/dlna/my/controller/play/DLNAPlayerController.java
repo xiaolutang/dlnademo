@@ -71,6 +71,8 @@ public class DLNAPlayerController implements IDLNAPlayerController {
             @Override
             public void success(ActionInvocation invocation) {
                 super.success(invocation);
+                mDeviceManager.registerAVTransport();
+                mDeviceManager.registerRenderingControl();
                 if(mDlnaPlayerEventListener != null){
                     mDlnaPlayerEventListener.onSetPlayUrlSuccess(new ActionCallback(invocation));
                 }

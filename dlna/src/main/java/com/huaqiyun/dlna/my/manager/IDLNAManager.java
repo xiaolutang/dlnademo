@@ -20,6 +20,8 @@ public interface IDLNAManager {
 
     IDLNAPlayerController getDLNAPlayerController();
 
+
+
     void setDeviceChangeListener(IDeviceManager.OnDeviceChangeListener deviceChangeListener);
 
     /**
