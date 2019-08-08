@@ -59,7 +59,7 @@ public class ClingPlayControl implements IPlayControl {
     private static final String DIDL_LITE_FOOTER = "</DIDL-Lite>";
     private static final String DIDL_LITE_HEADER = "<?xml version=\"1.0\"?>" + "<DIDL-Lite " + "xmlns=\"urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/\" " +
             "xmlns:dc=\"http://purl.org/dc/elements/1.1/\" " + "xmlns:upnp=\"urn:schemas-upnp-org:metadata-1-0/upnp/\" " +
-            "xmlns:com.huqiyun.dlna=\"urn:schemas-com.huqiyun.dlna-org:metadata-1-0/\">";
+            "xmlns:dlna=\"urn:schemas-dlna-org:metadata-1-0/\">";
 
     @Override
     public void playNew(final String url, final ControlCallback callback) {
