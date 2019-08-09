@@ -8,8 +8,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.huaqiyun.dlna.entity.ClingDevice;
-
 import org.fourthline.cling.model.meta.Device;
 
 

@@ -1,9 +1,7 @@
 package com.huaqiyun.dlna.my.controller.play;
 
-import android.support.annotation.Nullable;
 import android.util.Log;
 
-import com.huaqiyun.dlna.control.callback.ControlReceiveCallback;
 import com.huaqiyun.dlna.my.callback.ActionCallback;
 import com.huaqiyun.dlna.my.callback.GetVolumeActionCallback;
 import com.huaqiyun.dlna.my.manager.DeviceManager;
@@ -49,6 +47,11 @@ public class DLNAPlayerController implements IDLNAPlayerController {
 
     public DLNAPlayerController(IDeviceManager mDeviceManager) {
         this.mDeviceManager = mDeviceManager;
+    }
+
+
+    public void setmDlnaPlayerEventListener(AbsDLNAPlayerEventListener mDlnaPlayerEventListener) {
+        this.mDlnaPlayerEventListener = mDlnaPlayerEventListener;
     }
 
     @Override
@@ -294,7 +297,7 @@ public class DLNAPlayerController implements IDLNAPlayerController {
     }
 
     @Override
-    public void getVolume(@Nullable ControlReceiveCallback callback) {
+    public void getVolume() {
         Device device = mDeviceManager.getSelectedDevice();
         if(device == null){
             return;
@@ -356,7 +359,7 @@ public class DLNAPlayerController implements IDLNAPlayerController {
     }
 
     @Override
-    public void getPositionInfo(@Nullable ControlReceiveCallback callback) {
+    public void getPositionInfo() {
         Device device = mDeviceManager.getSelectedDevice();
         if(device == null){
             return;

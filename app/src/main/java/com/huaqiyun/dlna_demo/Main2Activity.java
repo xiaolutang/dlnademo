@@ -7,7 +7,6 @@ import android.os.IBinder;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -18,24 +17,13 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.huaqiyun.dlna.Config;
-import com.huaqiyun.dlna.control.callback.ControlCallback;
-import com.huaqiyun.dlna.control.callback.ControlReceiveCallback;
-import com.huaqiyun.dlna.entity.ClingDevice;
-import com.huaqiyun.dlna.entity.DLANPlayState;
-import com.huaqiyun.dlna.entity.IDevice;
-import com.huaqiyun.dlna.entity.IResponse;
-import com.huaqiyun.dlna.listener.DeviceListChangedListener;
 import com.huaqiyun.dlna.my.controller.play.DLNARemotePlayerState;
 import com.huaqiyun.dlna.my.controller.play.IDLNAPlayerController;
 import com.huaqiyun.dlna.my.manager.IDLNAManager;
-import com.huaqiyun.dlna.my.manager.IDeviceManager;
 import com.huaqiyun.dlna.my.service.DLNAPlayService;
-import com.huaqiyun.dlna.service.manager.ClingManager;
-import com.huaqiyun.dlna.util.Utils;
 
 import org.fourthline.cling.model.meta.Device;
 
-import java.util.List;
 
 public class Main2Activity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener, SeekBar.OnSeekBarChangeListener {
     private ListView mDeviceList;

@@ -5,7 +5,6 @@ import android.util.Log;
 
 import com.huaqiyun.dlna.my.controller.subscription.ISubscriptionController;
 import com.huaqiyun.dlna.my.controller.subscription.SubscriptionController;
-import com.huaqiyun.dlna.service.manager.ClingManager;
 
 import org.fourthline.cling.UpnpService;
 import org.fourthline.cling.controlpoint.ActionCallback;
@@ -139,7 +138,7 @@ public class DeviceManager implements IDeviceManager {
     @Override
     public void deviceAdded(Device device) {
         Log.d(TAG, "deviceAdded");
-        if (!device.getType().equals(ClingManager.DMR_DEVICE_TYPE)) {
+        if (!device.getType().equals(DMR_DEVICE_TYPE)) {
             Log.e(TAG, "deviceAdded called, but not match");
             return;
         }

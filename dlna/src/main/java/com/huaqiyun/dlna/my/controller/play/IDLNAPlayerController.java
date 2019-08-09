@@ -1,7 +1,5 @@
 package com.huaqiyun.dlna.my.controller.play;
 
-import android.support.annotation.Nullable;
-import com.huaqiyun.dlna.control.callback.ControlReceiveCallback;
 import com.huaqiyun.dlna.my.callback.ActionCallback;
 
 public interface IDLNAPlayerController {
@@ -51,12 +49,12 @@ public interface IDLNAPlayerController {
     /**
      * 获取tv进度
      */
-    void getPositionInfo(@Nullable ControlReceiveCallback callback);
+    void getPositionInfo();
 
     /**
      * 获取音量
      */
-    void getVolume(@Nullable ControlReceiveCallback callback);
+    void getVolume();
 
     @DLNARemotePlayerState.DLANPlayStates int getRemotePlayerState();
 
