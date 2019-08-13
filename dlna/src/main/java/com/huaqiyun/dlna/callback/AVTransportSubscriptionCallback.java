@@ -1,6 +1,5 @@
-package com.huaqiyun.dlna.my.callback;
+package com.huaqiyun.dlna.callback;
 
-import android.content.Intent;
 import android.util.Log;
 
 import com.huaqiyun.dlna.Config;
@@ -33,6 +32,10 @@ public class AVTransportSubscriptionCallback extends AbsSubscriptionCallback {
         return avTransportSubscriptionEventListener;
     }
 
+    public void setAvTransportSubscriptionEventListener(AVTransportSubscriptionEventListener avTransportSubscriptionEventListener) {
+        this.avTransportSubscriptionEventListener = avTransportSubscriptionEventListener;
+    }
+
     @Override
     protected void eventReceived(GENASubscription subscription) {
         Map values = subscription.getCurrentValues();
@@ -45,6 +48,7 @@ public class AVTransportSubscriptionCallback extends AbsSubscriptionCallback {
 
     private void doAVTransportChange(String lastChangeValue) {
         try {
+            Log.d(TAG,"doAVTransportChange");
             LastChange lastChange = new LastChange(new AVTransportLastChangeParser(), lastChangeValue);
 
             //Parse TransportState value.

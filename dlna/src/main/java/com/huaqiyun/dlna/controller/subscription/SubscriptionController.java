@@ -1,14 +1,14 @@
-package com.huaqiyun.dlna.my.controller.subscription;
+package com.huaqiyun.dlna.controller.subscription;
 
-import com.huaqiyun.dlna.my.callback.AVTransportSubscriptionCallback;
-import com.huaqiyun.dlna.my.callback.RenderingControlSubscriptionCallback;
-import com.huaqiyun.dlna.my.manager.DeviceManager;
+import com.huaqiyun.dlna.callback.AVTransportSubscriptionCallback;
+import com.huaqiyun.dlna.callback.RenderingControlSubscriptionCallback;
+import com.huaqiyun.dlna.manager.DeviceManager;
 import com.huaqiyun.dlna.util.Utils;
 
 import org.fourthline.cling.controlpoint.ControlPoint;
 import org.fourthline.cling.model.meta.Device;
 
-public class SubscriptionController implements ISubscriptionController{
+public class SubscriptionController implements ISubscriptionController {
     private AVTransportSubscriptionCallback mAvTransportSubscriptionCallback;
     private RenderingControlSubscriptionCallback mRenderingControlSubscriptionCallback;
 

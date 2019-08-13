@@ -17,10 +17,10 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.huaqiyun.dlna.Config;
-import com.huaqiyun.dlna.my.controller.play.DLNARemotePlayerState;
-import com.huaqiyun.dlna.my.controller.play.IDLNAPlayerController;
-import com.huaqiyun.dlna.my.manager.IDLNAManager;
-import com.huaqiyun.dlna.my.service.DLNAPlayService;
+import com.huaqiyun.dlna.controller.play.DLNARemotePlayerState;
+import com.huaqiyun.dlna.controller.play.IDLNAPlayerController;
+import com.huaqiyun.dlna.manager.IDLNAManager;
+import com.huaqiyun.dlna.service.DLNAPlayService;
 
 import org.fourthline.cling.model.meta.Device;
 

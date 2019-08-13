@@ -1,6 +1,6 @@
-package com.huaqiyun.dlna.my.manager;
+package com.huaqiyun.dlna.manager;
 
-import com.huaqiyun.dlna.my.controller.play.IDLNAPlayerController;
+import com.huaqiyun.dlna.controller.play.IDLNAPlayerController;
 
 import org.fourthline.cling.model.meta.Device;
 

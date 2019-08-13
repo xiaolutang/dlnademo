@@ -1,8 +1,13 @@
-package com.huaqiyun.dlna.my.controller.play;
+package com.huaqiyun.dlna.controller.play;
 
-import com.huaqiyun.dlna.my.callback.ActionCallback;
+import com.huaqiyun.dlna.callback.ActionCallback;
 
 public interface IDLNAPlayerController {
+
+    void setDlnaPlayerEventListener(AbsDLNAPlayerEventListener mDlnaPlayerEventListener);
+
+    String getPlayUrl();
+
     /**
      * 播放一个新片源
      *

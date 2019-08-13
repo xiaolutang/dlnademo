@@ -1,7 +1,6 @@
-package com.huaqiyun.dlna.my.callback;
+package com.huaqiyun.dlna.callback;
 
 import org.fourthline.cling.model.action.ActionInvocation;
-import org.fourthline.cling.model.message.UpnpResponse;
 
 public class GetVolumeActionCallback extends ActionCallback {
     private int volume;

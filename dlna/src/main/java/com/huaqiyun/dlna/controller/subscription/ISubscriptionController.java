@@ -1,4 +1,4 @@
-package com.huaqiyun.dlna.my.controller.subscription;
+package com.huaqiyun.dlna.controller.subscription;
 
 import org.fourthline.cling.controlpoint.ControlPoint;
 import org.fourthline.cling.model.meta.Device;

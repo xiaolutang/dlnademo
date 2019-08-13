@@ -1,10 +1,10 @@
-package com.huaqiyun.dlna.my.manager;
+package com.huaqiyun.dlna.manager;
 
 import android.content.Context;
 import android.util.Log;
 
-import com.huaqiyun.dlna.my.controller.subscription.ISubscriptionController;
-import com.huaqiyun.dlna.my.controller.subscription.SubscriptionController;
+import com.huaqiyun.dlna.controller.subscription.ISubscriptionController;
+import com.huaqiyun.dlna.controller.subscription.SubscriptionController;
 
 import org.fourthline.cling.UpnpService;
 import org.fourthline.cling.controlpoint.ActionCallback;
@@ -20,6 +20,7 @@ import org.fourthline.cling.registry.Registry;
 import org.fourthline.cling.registry.RegistryListener;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 public class DeviceManager implements IDeviceManager {
     private final String TAG = DeviceManager.class.getSimpleName();
@@ -34,6 +35,8 @@ public class DeviceManager implements IDeviceManager {
     private ISubscriptionController mSubscriptionController = new SubscriptionController();
     private Device mSelectDevice;
 
+    private RegistryListener registryListener = new MRegistryListener();
+
     private OnDeviceChangeListener mDeviceChangeListener;
 
     private static DeviceManager deviceManager;
@@ -44,6 +47,11 @@ public class DeviceManager implements IDeviceManager {
                 if(deviceManager == null){
                     deviceManager = new DeviceManager(mUpnpService);
                 }
+            }
+        }
+        if(deviceManager.mUpnpService != mUpnpService){
+            synchronized (DeviceManager.class){
+                deviceManager = new DeviceManager(mUpnpService);
             }
         }
         return deviceManager;
@@ -71,7 +79,9 @@ public class DeviceManager implements IDeviceManager {
 
     private DeviceManager(UpnpService mUpnpService) {
         this.mUpnpService = mUpnpService;
-        mUpnpService.getRegistry().addListener(new MRegistryListener());
+        mUpnpService.getRegistry().addListener(registryListener);
+        mDeviceList.clear();
+        mDeviceList.addAll(mUpnpService.getRegistry().getDevices());
     }
 
     @Override
@@ -86,6 +96,14 @@ public class DeviceManager implements IDeviceManager {
 
     @Override
     public ArrayList<Device> getDeviceList() {
+        mDeviceList.clear();
+        Collection<Device> deviceCollection =  mUpnpService.getRegistry().getDevices();
+        for (Device device: deviceCollection){
+            if (!device.getType().equals(DMR_DEVICE_TYPE)) {
+               break;
+            }
+            mDeviceList.add(device);
+        }
         return mDeviceList;
     }
 
@@ -107,6 +125,7 @@ public class DeviceManager implements IDeviceManager {
 
     @Override
     public void search() {
+        mUpnpService.getRegistry().removeAllRemoteDevices();
         mUpnpService.getControlPoint().search();
     }
 
@@ -127,22 +146,23 @@ public class DeviceManager implements IDeviceManager {
 
     @Override
     public void destroy() {
-        mDeviceList.clear();
-        mSubscriptionController.destroy();
-        mDeviceChangeListener = null;
         synchronized (DeviceManager.class){
+            mDeviceList.clear();
+            mSubscriptionController.destroy();
+            mDeviceChangeListener = null;
+            mUpnpService.getRegistry().removeListener(registryListener);
             deviceManager = null;
         }
     }
 
     @Override
     public void deviceAdded(Device device) {
-        Log.d(TAG, "deviceAdded");
+
         if (!device.getType().equals(DMR_DEVICE_TYPE)) {
             Log.e(TAG, "deviceAdded called, but not match");
             return;
         }
-
+        Log.d(TAG, "deviceAdded");
         if(!mDeviceList.contains(device)){
             mDeviceList.add(device);
             if(mDeviceChangeListener != null){
@@ -163,26 +183,30 @@ public class DeviceManager implements IDeviceManager {
     class MRegistryListener implements RegistryListener {
         @Override
         public void remoteDeviceDiscoveryStarted(Registry registry, RemoteDevice device) {
-
+            Log.d(TAG,"remoteDeviceDiscoveryStarted");
         }
 
         @Override
         public void remoteDeviceDiscoveryFailed(Registry registry, RemoteDevice device, Exception ex) {
+            Log.d(TAG,"remoteDeviceDiscoveryFailed");
             deviceRemoved(device);
         }
 
         @Override
         public void remoteDeviceAdded(Registry registry, RemoteDevice device) {
+            Log.d(TAG,"remoteDeviceAdded");
             deviceAdded(device);
         }
 
         @Override
         public void remoteDeviceUpdated(Registry registry, RemoteDevice device) {
-
+            Log.d(TAG,"remoteDeviceUpdated");
+            deviceAdded(device);
         }
 
         @Override
         public void remoteDeviceRemoved(Registry registry, RemoteDevice device) {
+            Log.d(TAG,"remoteDeviceRemoved");
             deviceRemoved(device);
         }
 
@@ -198,12 +222,12 @@ public class DeviceManager implements IDeviceManager {
 
         @Override
         public void beforeShutdown(Registry registry) {
-
+            Log.d(TAG,"beforeShutdown");
         }
 
         @Override
         public void afterShutdown() {
-
+            Log.d(TAG,"afterShutdown");
         }
     }
 }

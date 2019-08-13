@@ -1,21 +1,16 @@
-package com.huaqiyun.dlna.my.service;
+package com.huaqiyun.dlna.service;
 
-import android.app.Service;
-import android.content.ComponentName;
 import android.content.Intent;
-import android.content.ServiceConnection;
-import android.os.Binder;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import com.huaqiyun.dlna.my.controller.play.DLNAPlayerController;
-import com.huaqiyun.dlna.my.controller.play.IDLNAPlayerController;
-import com.huaqiyun.dlna.my.manager.DeviceManager;
-import com.huaqiyun.dlna.my.manager.IDLNAManager;
-import com.huaqiyun.dlna.my.manager.IDeviceManager;
+import com.huaqiyun.dlna.controller.play.DLNAPlayerController;
+import com.huaqiyun.dlna.controller.play.IDLNAPlayerController;
+import com.huaqiyun.dlna.manager.DeviceManager;
+import com.huaqiyun.dlna.manager.IDLNAManager;
+import com.huaqiyun.dlna.manager.IDeviceManager;
 
-import org.fourthline.cling.android.AndroidUpnpService;
 import org.fourthline.cling.android.AndroidUpnpServiceImpl;
 import org.fourthline.cling.model.meta.Device;
 
@@ -28,37 +23,15 @@ import java.util.List;
 public class DLNAPlayService extends AndroidUpnpServiceImpl implements IDeviceManager.OnDeviceChangeListener {
     private final String TAG = DLNAPlayService.class.getSimpleName();
 
-    private IDeviceManager mDeviceManager;
-    private IDLNAPlayerController mPlayerController;
-    private Device mSelectDevice;
-    private DLNAManager mDlnaManager = new DLNAManager();
+    protected IDeviceManager mDeviceManager;
+    protected IDLNAPlayerController mPlayerController;
+    protected Device mSelectDevice;
+    protected DLNAManager mDlnaManager = new DLNAManager();
 
-//    private boolean isConnect = false;
-
-//    private ServiceConnection mServiceConnection = new ServiceConnection() {
-//
-//        public void onServiceConnected(ComponentName className, IBinder service) {
-//
-//            mDeviceManager = DeviceManager.getInstance(((AndroidUpnpService) service).get());
-//            mDeviceManager.setDeviceChangeListener(DLNAPlayService.this);
-//            mPlayerController = new DLNAPlayerController(mDeviceManager);
-//            isConnect = true;
-//        }
-//
-//        public void onServiceDisconnected(ComponentName className) {
-////            mDeviceManager.destroy();
-//            isConnect = false;
-//        }
-//    };
 
     @Override
     public void onCreate() {
         Log.d(TAG,"onCreate");
-
-//        if(!isConnect){
-//            Intent intent = new Intent(this, AndroidUpnpServiceImpl.class);
-//            bindService(intent,mServiceConnection,BIND_AUTO_CREATE);
-//        }
         super.onCreate();
         mDeviceManager = DeviceManager.getInstance(upnpService);
         mDeviceManager.setDeviceChangeListener(DLNAPlayService.this);
@@ -74,6 +47,13 @@ public class DLNAPlayService extends AndroidUpnpServiceImpl implements IDeviceMa
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
+        if(mDeviceManager == null){
+            mDeviceManager = DeviceManager.getInstance(upnpService);
+            mDeviceManager.setDeviceChangeListener(DLNAPlayService.this);
+        }
+        if(mPlayerController == null){
+            mPlayerController = new DLNAPlayerController(mDeviceManager);
+        }
         return mDlnaManager;
     }
 
@@ -135,7 +115,7 @@ public class DLNAPlayService extends AndroidUpnpServiceImpl implements IDeviceMa
             //是不是需要下面这个？
             mPlayerController = null;
             mDeviceManager.destroy();
-            stopSelf();
+            mDeviceManager = null;
         }
     }
 }

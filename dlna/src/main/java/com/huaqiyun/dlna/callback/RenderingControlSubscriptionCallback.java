@@ -1,6 +1,7 @@
-package com.huaqiyun.dlna.my.callback;
+package com.huaqiyun.dlna.callback;
 
 import android.util.Log;
+
 import com.huaqiyun.dlna.util.Utils;
 
 import org.fourthline.cling.model.gena.GENASubscription;

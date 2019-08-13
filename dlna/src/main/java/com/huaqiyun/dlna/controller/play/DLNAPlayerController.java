@@ -1,11 +1,11 @@
-package com.huaqiyun.dlna.my.controller.play;
+package com.huaqiyun.dlna.controller.play;
 
 import android.util.Log;
 
-import com.huaqiyun.dlna.my.callback.ActionCallback;
-import com.huaqiyun.dlna.my.callback.GetVolumeActionCallback;
-import com.huaqiyun.dlna.my.manager.DeviceManager;
-import com.huaqiyun.dlna.my.manager.IDeviceManager;
+import com.huaqiyun.dlna.callback.ActionCallback;
+import com.huaqiyun.dlna.callback.GetVolumeActionCallback;
+import com.huaqiyun.dlna.manager.DeviceManager;
+import com.huaqiyun.dlna.manager.IDeviceManager;
 import com.huaqiyun.dlna.util.Utils;
 
 import org.fourthline.cling.model.action.ActionInvocation;
@@ -34,6 +34,8 @@ import java.util.Date;
 public class DLNAPlayerController implements IDLNAPlayerController {
     private static final String TAG = DLNAPlayerController.class.getSimpleName();
 
+    private String playUrl = "";
+
     private static final String DIDL_LITE_FOOTER = "</DIDL-Lite>";
     private static final String DIDL_LITE_HEADER = "<?xml version=\"1.0\"?>" + "<DIDL-Lite " + "xmlns=\"urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/\" " +
             "xmlns:dc=\"http://purl.org/dc/elements/1.1/\" " + "xmlns:upnp=\"urn:schemas-upnp-org:metadata-1-0/upnp/\" " +
@@ -49,13 +51,18 @@ public class DLNAPlayerController implements IDLNAPlayerController {
         this.mDeviceManager = mDeviceManager;
     }
 
-
-    public void setmDlnaPlayerEventListener(AbsDLNAPlayerEventListener mDlnaPlayerEventListener) {
+    @Override
+    public void setDlnaPlayerEventListener(AbsDLNAPlayerEventListener mDlnaPlayerEventListener) {
         this.mDlnaPlayerEventListener = mDlnaPlayerEventListener;
     }
 
     @Override
-    public void setPlayUrl(String url) {
+    public String getPlayUrl() {
+        return playUrl;
+    }
+
+    @Override
+    public void setPlayUrl(final String url) {
         Device device = mDeviceManager.getSelectedDevice();
         if(device == null){
             return;
@@ -74,6 +81,7 @@ public class DLNAPlayerController implements IDLNAPlayerController {
             @Override
             public void success(ActionInvocation invocation) {
                 super.success(invocation);
+                playUrl = url;
                 mDeviceManager.registerAVTransport();
                 mDeviceManager.registerRenderingControl();
                 if(mDlnaPlayerEventListener != null){
@@ -224,6 +232,8 @@ public class DLNAPlayerController implements IDLNAPlayerController {
         if(device == null){
             return;
         }
+        //停止投屏的时候，将播放地址置空
+        playUrl = "";
         Service service = device.findService(DeviceManager.AV_TRANSPORT_SERVICE);
         mDeviceManager.execute(new Stop(service) {
             @Override

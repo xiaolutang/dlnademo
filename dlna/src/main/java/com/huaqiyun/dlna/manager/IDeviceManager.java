@@ -1,4 +1,4 @@
-package com.huaqiyun.dlna.my.manager;
+package com.huaqiyun.dlna.manager;
 
 import org.fourthline.cling.controlpoint.ActionCallback;
 import org.fourthline.cling.controlpoint.SubscriptionCallback;

@@ -1,4 +1,4 @@
-package com.huaqiyun.dlna.my.controller.play;
+package com.huaqiyun.dlna.controller.play;
 
 import android.support.annotation.IntDef;
 

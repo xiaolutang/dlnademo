@@ -1,4 +1,4 @@
-package com.huaqiyun.dlna.my.callback;
+package com.huaqiyun.dlna.callback;
 
 import android.util.Log;
 
@@ -39,6 +39,6 @@ public abstract class AbsSubscriptionCallback extends SubscriptionCallback {
 
     @Override
     protected void ended(GENASubscription subscription, CancelReason reason, UpnpResponse responseStatus) {
-        Log.e(TAG, "ended");
+        Log.d(TAG, "ended");
     }
 }
